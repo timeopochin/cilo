@@ -2,6 +2,8 @@
 
 _Calculator that I Love O' so very much_
 
+![prettify demo](prettify_demo.gif)
+
 === Why C?
 
 Honestly? I enjoy programming in C and the high performance is always a bonus.
