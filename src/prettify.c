@@ -121,5 +121,10 @@ int main(int argc, char* argv[]) {
 }
 
 void usage() {
-    wprintf(L"USAGE: prettify 'expr_1' 'expr_2' ...\n");
+    wprintf(L"USAGE: prettify [OPTIONS] 'expr_1' [OPTIONS] 'expr_2' ...\n"
+            L"OPTIONS:\n"
+            L"    -bg <colour>                     set backgroud colour\n"
+            L"    -fg <colour>                     set foregroud colour\n\n"
+            L"<colours>:\n"
+            L"    black, red, green, yellow, blue, magenta, cyan, white\n");
 }

@@ -60,6 +60,8 @@ It'd be cool for me to add a `make install`, but I'm lazy and far from fluent in
 https://en.wikipedia.org/wiki/Reverse_Polish_notation[Reverse Polish Notation (RPN)]
 and displays a nicely formated equation.
 
+You can set the backgroup and foregroud colours of following equations with `-bg <colour>` and `-fg <colour>`.
+
 You can use special functions in the RPN arguments:
 
 * `n` to negate
