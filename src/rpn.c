@@ -21,10 +21,10 @@ int exprFromRPN(Expr** (exprs), Expr*** stack, char* rpn) {
     do {
         if (isdigit(c)) {
             valueStarted = true;
+        } else if (valueStarted) {
+            valueStarted = false;
             finalSize++;
             exprCount++;
-        } else if (valueStarted) {
-                valueStarted = false;
         }
         if (strchr(OPCHARS, c) != NULL) {
             finalSize--;
@@ -37,6 +37,10 @@ int exprFromRPN(Expr** (exprs), Expr*** stack, char* rpn) {
         }
         i++;
         c = rpn[i];
+        if (c == 0 && valueStarted) {
+            i--;
+            c = ' ';
+        }
     } while (c != 0);
     (*stack) = malloc(sizeof(Expr*)*maxSize);
     (*exprs) = malloc(sizeof(Expr)*exprCount);
