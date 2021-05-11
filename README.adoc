@@ -2,7 +2,7 @@
 
 _Calculator that I Love O' so very much_
 
-![prettify demo](prettify_demo.gif)
+image::prettify_demo.gif[prettify demo]
 
 === Why C?
 
