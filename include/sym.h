@@ -35,7 +35,31 @@ struct Expr {
     bool hl; // true if expression is selected
 };
 
-//Expr evaluate(Expr* expr);
+Expr* getInt(long integer);
+
+Expr* getOperator(Expr* a, Expr* b, int operator);
+
+Expr* getAdd(Expr* a, Expr* b);
+
+Expr* getMul(Expr* a, Expr* b);
+
+Expr* getPow(Expr* a, Expr* b);
+
+Expr* getSub(Expr* a, Expr* b);
+
+Expr* getDiv(Expr* a, Expr* b);
+
+Expr* getFunction(Expr* a, int name);
+
+Expr* getNeg(Expr* a);
+
+Expr* getSin(Expr* a);
+
+Expr* getCos(Expr* a);
+
+Expr* getTan(Expr* a);
+
+//Expr* evaluate(Expr* expr);
 
 #endif
 

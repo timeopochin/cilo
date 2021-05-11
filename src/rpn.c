@@ -6,6 +6,8 @@
 #include <string.h>
 #include <wchar.h>
 
+#include "sym.h"
+
 #define OPCHARS "+-*/^"
 #define FUNCCHARS "nsct"
 

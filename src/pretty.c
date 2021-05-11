@@ -206,7 +206,7 @@ Pretty pretty(Expr* expr) {
                 case POW:
 
                     // Set needed brackets
-                    a = expr->a->type != NONE ? brackets(expr->a) : pretty(expr->a);
+                    a = expr->a->type != INTEGER ? brackets(expr->a) : pretty(expr->a);
                     b = pretty(expr->b);
 
                     // Calculate size
