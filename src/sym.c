@@ -1,72 +1,68 @@
 #include "sym.h"
 
-Expr* getInt(long integer) {
-    Expr* expr;
+#include <stdlib.h>
+
+void getInt(Expr* expr, long integer) {
     expr->a = NULL;
     expr->b = NULL;
     expr->val = integer;
     expr->type = INTEGER;
     expr->operator = NONE;
     expr->hl = false;
-    return expr;
 }
 
-Expr* getOperator(Expr* a, Expr* b, int operator) {
-    Expr* expr;
+void getOperator(Expr* expr, Expr* a, Expr* b, int operator) {
     expr->a = a;
     expr->b = b;
     expr->val = 0;
     expr->type = OPERATOR;
     expr->operator = operator;
     expr->hl = false;
-    return expr;
 }
 
-Expr* getAdd(Expr* a, Expr* b) {
-    return getOperator(a, b, ADD);
+void getAdd(Expr* expr, Expr* a, Expr* b) {
+    getOperator(expr, a, b, ADD);
 }
 
-Expr* getMul(Expr* a, Expr* b) {
-    return getOperator(a, b, MUL);
+void getMul(Expr* expr, Expr* a, Expr* b) {
+    getOperator(expr, a, b, MUL);
 }
 
-Expr* getPow(Expr* a, Expr* b) {
-    return getOperator(a, b, POW);
+void getPow(Expr* expr, Expr* a, Expr* b) {
+    getOperator(expr, a, b, POW);
 }
 
-Expr* getSub(Expr* a, Expr* b) {
-    return getOperator(a, b, SUB);
+void getSub(Expr* expr, Expr* a, Expr* b) {
+    getOperator(expr, a, b, SUB);
 }
 
-Expr* getDiv(Expr* a, Expr* b) {
-    return getOperator(a, b, DIV);
+void getDiv(Expr* expr, Expr* a, Expr* b) {
+    getOperator(expr, a, b, DIV);
 }
 
-Expr* getFunction(Expr* a, int name) {
-    Expr* expr;
+void getFunction(Expr* expr, Expr* a, int name) {
     expr->a = a;
     expr->b = NULL;
     expr->val = 0;
     expr->type = FUNCTION;
     expr->operator = name;
     expr->hl = false;
-    return expr;
 }
 
-Expr* getNeg(Expr* a) {
-    return getFunction(a, NEG);
+void getNeg(Expr* expr, Expr* a) {
+    getFunction(expr, a, NEG);
 }
 
-Expr* getSin(Expr* a) {
-    return getFunction(a, SIN);
+void getSin(Expr* expr, Expr* a) {
+    getFunction(expr, a, SIN);
 }
 
-Expr* getCos(Expr* a) {
-    return getFunction(a, COS);
+void getCos(Expr* expr, Expr* a) {
+    getFunction(expr, a, COS);
 }
 
-Expr* getTan(Expr* a) {
-    return getFunction(a, TAN);
+void getTan(Expr* expr, Expr* a) {
+    getFunction(expr, a, TAN);
 }
 
 /*
@@ -75,7 +71,7 @@ Expr* evaluate(Expr* expr) {
         case INTEGER:
 
             // Already evaluated
-            return getInt(expr->val);
+            getInt(expr, expr->val);
 
         case OPERATOR:
 

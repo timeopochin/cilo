@@ -35,29 +35,29 @@ struct Expr {
     bool hl; // true if expression is selected
 };
 
-Expr* getInt(long integer);
+void getInt(Expr* expr, long integer);
 
-Expr* getOperator(Expr* a, Expr* b, int operator);
+void getOperator(Expr* expr, Expr* a, Expr* b, int operator);
 
-Expr* getAdd(Expr* a, Expr* b);
+void getAdd(Expr* expr, Expr* a, Expr* b);
 
-Expr* getMul(Expr* a, Expr* b);
+void getMul(Expr* expr, Expr* a, Expr* b);
 
-Expr* getPow(Expr* a, Expr* b);
+void getPow(Expr* expr, Expr* a, Expr* b);
 
-Expr* getSub(Expr* a, Expr* b);
+void getSub(Expr* expr, Expr* a, Expr* b);
 
-Expr* getDiv(Expr* a, Expr* b);
+void getDiv(Expr* expr, Expr* a, Expr* b);
 
-Expr* getFunction(Expr* a, int name);
+void getFunction(Expr* expr, Expr* a, int name);
 
-Expr* getNeg(Expr* a);
+void getNeg(Expr* expr, Expr* a);
 
-Expr* getSin(Expr* a);
+void getSin(Expr* expr, Expr* a);
 
-Expr* getCos(Expr* a);
+void getCos(Expr* expr, Expr* a);
 
-Expr* getTan(Expr* a);
+void getTan(Expr* expr, Expr* a);
 
 //Expr* evaluate(Expr* expr);
 

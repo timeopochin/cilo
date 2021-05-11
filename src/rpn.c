@@ -11,9 +11,9 @@
 #define OPCHARS "+-*/^"
 #define FUNCCHARS "nsct"
 
-int exprFromRPN(Expr** (exprs), Expr*** stack, char* rpn) {
+int exprFromRPN(Expr*** stack, char* rpn) {
 
-    // Create a stack
+    // Create a (*stack)
     int exprCount = 0;
     int maxSize = 0;
     int finalSize = 0;
@@ -45,7 +45,7 @@ int exprFromRPN(Expr** (exprs), Expr*** stack, char* rpn) {
         }
     } while (c != 0);
     (*stack) = malloc(sizeof(Expr*)*maxSize);
-    (*exprs) = malloc(sizeof(Expr)*exprCount);
+    Expr* exprs = malloc(sizeof(Expr)*exprCount);
 
     // Execute RPN
     valueStarted = false;
@@ -62,13 +62,8 @@ int exprFromRPN(Expr** (exprs), Expr*** stack, char* rpn) {
         } else if (valueStarted) {
 
             // Push an integer
-            (*exprs)[exprPos].a = NULL;
-            (*exprs)[exprPos].b = NULL;
-            (*exprs)[exprPos].val = value;
-            (*exprs)[exprPos].type = INTEGER;
-            (*exprs)[exprPos].operator = NONE;
-            (*exprs)[exprPos].hl = false;
-            (*stack)[pos] = &(*exprs)[exprPos];
+            getInt(&exprs[exprPos], value);
+            (*stack)[pos] = &exprs[exprPos];
             exprPos++;
             pos++;
             value = 0;
@@ -80,32 +75,25 @@ int exprFromRPN(Expr** (exprs), Expr*** stack, char* rpn) {
             if (pos < 2) {
                 return 0;
             }
-            (*exprs)[exprPos].a = (*stack)[pos - 2];
-            (*exprs)[exprPos].b = (*stack)[pos - 1];
-            (*exprs)[exprPos].val = 0;
-            (*exprs)[exprPos].type = OPERATOR;
-            (*exprs)[exprPos].hl = false;
             switch (c) {
                 case '+':
-                    (*exprs)[exprPos].operator = ADD;
+                    getAdd(&exprs[exprPos], (*stack)[pos - 2], (*stack)[pos - 1]);
                     break;
                 case '-':
-                    (*exprs)[exprPos].operator = SUB;
+                    getSub(&exprs[exprPos], (*stack)[pos - 2], (*stack)[pos - 1]);
                     break;
                 case '*':
-                    (*exprs)[exprPos].operator = MUL;
+                    getMul(&exprs[exprPos], (*stack)[pos - 2], (*stack)[pos - 1]);
                     break;
                 case '/':
-                    (*exprs)[exprPos].operator = DIV;
+                    getDiv(&exprs[exprPos], (*stack)[pos - 2], (*stack)[pos - 1]);
                     break;
                 case '^':
-                    (*exprs)[exprPos].operator = POW;
-                    break;
-                default:
+                    getPow(&exprs[exprPos], (*stack)[pos - 2], (*stack)[pos - 1]);
                     break;
             }
             (*stack)[pos - 1] = NULL;
-            (*stack)[pos - 2] = &(*exprs)[exprPos];
+            (*stack)[pos - 2] = &exprs[exprPos];
             pos--;
             exprPos++;
         } else if (strchr(FUNCCHARS, c) != NULL) {
@@ -114,28 +102,23 @@ int exprFromRPN(Expr** (exprs), Expr*** stack, char* rpn) {
             if (pos < 1) {
                 return 0;
             }
-            (*exprs)[exprPos].a = (*stack)[pos - 1];
-            (*exprs)[exprPos].b = NULL;
-            (*exprs)[exprPos].val = 0;
-            (*exprs)[exprPos].type = FUNCTION;
-            (*exprs)[exprPos].hl = false;
             switch (c) {
                 case 'n':
-                    (*exprs)[exprPos].operator = NEG;
+                    getNeg(&exprs[exprPos], (*stack)[pos - 1]);
                     break;
                 case 's':
-                    (*exprs)[exprPos].operator = SIN;
+                    getSin(&exprs[exprPos], (*stack)[pos - 1]);
                     break;
                 case 'c':
-                    (*exprs)[exprPos].operator = COS;
+                    getCos(&exprs[exprPos], (*stack)[pos - 1]);
                     break;
                 case 't':
-                    (*exprs)[exprPos].operator = TAN;
+                    getTan(&exprs[exprPos], (*stack)[pos - 1]);
                     break;
                 default:
                     break;
             }
-            (*stack)[pos - 1] = &(*exprs)[exprPos];
+            (*stack)[pos - 1] = &exprs[exprPos];
             exprPos++;
         } else if (c == 'h') {
             (*stack)[pos - 1]->hl = true;
@@ -148,5 +131,6 @@ int exprFromRPN(Expr** (exprs), Expr*** stack, char* rpn) {
         }
     } while (c != 0);
 
+    free(exprs);
     return finalSize;
 }

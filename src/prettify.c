@@ -100,18 +100,16 @@ int main(int argc, char* argv[]) {
             swprintf(formating, 11, L"\x1b[0;3%d;4%dm", fg, bg);
 
             // Get the expression tree
-            Expr* exprs;
             Expr** stack;
-            int exprCount = exprFromRPN(&exprs, &stack, argv[i]);
+            int exprCount = exprFromRPN(&stack, argv[i]);
             if (!exprCount) {
                 wprintf(L"\x1b[41;38mStack is empty!\x1b[0m\n");
                 return 1;
             }
 
             // Display pretty output
-            display(&(*stack[exprCount - 1]), formating, true);
-
-            free(exprs);
+            display(stack[exprCount - 1], formating, true);
+            //free(exprs);
             free(stack);
         }
     }

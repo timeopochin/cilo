@@ -3,7 +3,7 @@
 
 #include "sym.h"
 
-int exprFromRPN(Expr** exprs, Expr*** stack, char* rpn);
+int exprFromRPN(Expr*** stack, char* rpn);
 
 #endif
 
