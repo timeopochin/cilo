@@ -1,0 +1,78 @@
+== cilo
+
+_Calculator that I Love O' so very much_
+
+=== Why C?
+
+Honestly? I enjoy programming in C and the high performance is always a bonus.
+
+The lower level of C always forces me to better structure my projects.
+I am generally far more proud of my C code compared to my Python code.
+
+The original idea for this project was
+https://github.com/timeopochin/ilo-nanpa.git[implemented in Python].
+I may go back to this project in the future to prototype ideas quickly.
+But you can safely assume that cilo will be more reliable going forwards.
+
+=== Dependecies
+
+None.
+
+_(Though your terminal must support Unicode and ANSI escape codes)_
+
+=== Building
+
+==== Linux
+
+Clone the repository,
+go into the directory,
+type `make` and Bob's your uncle.
+
+```
+git clone https://github.com/timeopochin/cilo.git
+cd cilo
+make
+```
+
+==== macOS
+
+Probably the same or whatever, I don't know, I don't use macOS.
+
+==== Windows
+
+I would recomend this
+https://www.youtube.com/watch?v=dQw4w9WgXcQ[tutorial with detailed instructions]
+on how to setup your build environment.
+
+=== Usage
+
+Right now, I have only implemented the 'pretty' rendering,
+any interactive UI and actual evaluation of the equations are, for the time being,
+only _(partially)_ working on the https://github.com/timeopochin/ilo-nanpa.git[Python project].
+
+After building, various _(only 1 for now)_ executables will be in the `bin` directory.
+These can be executed or placed in a directory contained in your `PATH` to be accessible from anywhere.
+It'd be cool for me to add a `make install`, but I'm lazy and far from fluent in Makefile standards.
+
+==== Prettify
+
+`prettify` takes string arguments in
+https://en.wikipedia.org/wiki/Reverse_Polish_notation[Reverse Polish Notation (RPN)]
+and displays a nicely formated equation.
+
+You can use special functions in the RPN arguments:
+
+* `n` to negate
+* `s`, `c` and `t` for `sin`, `cos` and `tan` respectively
+* `h` to highlight a section
+
+Here are some examples you can try:
+
+```
+prettify '3 1 2 / +'
+```
+
+```
+prettify -bg magenta -fg black '5 3 + 4 1 / s *' -bg blue '5 4 2 + h / 3 n 2 ^ / 1 6 * /'
+```
+
