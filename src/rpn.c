@@ -43,7 +43,8 @@ int exprFromRPN(Expr*** stack, char* rpn) {
         }
     } while (c != 0);
     (*stack) = malloc(sizeof(Expr*)*maxSize);
-    Expr* exprs = malloc(sizeof(Expr)*exprCount);
+    //Expr* exprs = malloc(sizeof(Expr)*exprCount);
+    Expr** exprs = malloc(sizeof(Expr*)*exprCount);
 
     // Execute RPN
     valueStarted = false;
@@ -60,8 +61,8 @@ int exprFromRPN(Expr*** stack, char* rpn) {
         } else if (valueStarted) {
 
             // Push an integer
-            getInt(&exprs[exprPos], value);
-            (*stack)[pos] = &exprs[exprPos];
+            exprs[exprPos] = getInt(value);
+            (*stack)[pos] = exprs[exprPos];
             exprPos++;
             pos++;
             value = 0;
@@ -75,23 +76,23 @@ int exprFromRPN(Expr*** stack, char* rpn) {
             }
             switch (c) {
                 case '+':
-                    getAdd(&exprs[exprPos], (*stack)[pos - 2], (*stack)[pos - 1]);
+                    exprs[exprPos] = getAdd((*stack)[pos - 2], (*stack)[pos - 1]);
                     break;
                 case '-':
-                    getSub(&exprs[exprPos], (*stack)[pos - 2], (*stack)[pos - 1]);
+                    exprs[exprPos] = getSub((*stack)[pos - 2], (*stack)[pos - 1]);
                     break;
                 case '*':
-                    getMul(&exprs[exprPos], (*stack)[pos - 2], (*stack)[pos - 1]);
+                    exprs[exprPos] = getMul((*stack)[pos - 2], (*stack)[pos - 1]);
                     break;
                 case '/':
-                    getDiv(&exprs[exprPos], (*stack)[pos - 2], (*stack)[pos - 1]);
+                    exprs[exprPos] = getDiv((*stack)[pos - 2], (*stack)[pos - 1]);
                     break;
                 case '^':
-                    getPow(&exprs[exprPos], (*stack)[pos - 2], (*stack)[pos - 1]);
+                    exprs[exprPos] = getPow((*stack)[pos - 2], (*stack)[pos - 1]);
                     break;
             }
             (*stack)[pos - 1] = NULL;
-            (*stack)[pos - 2] = &exprs[exprPos];
+            (*stack)[pos - 2] = exprs[exprPos];
             pos--;
             exprPos++;
         } else if (strchr(FUNCCHARS, c) != NULL) {
@@ -102,21 +103,21 @@ int exprFromRPN(Expr*** stack, char* rpn) {
             }
             switch (c) {
                 case 'n':
-                    getNeg(&exprs[exprPos], (*stack)[pos - 1]);
+                    exprs[exprPos] = getNeg((*stack)[pos - 1]);
                     break;
                 case 's':
-                    getSin(&exprs[exprPos], (*stack)[pos - 1]);
+                    exprs[exprPos] = getSin((*stack)[pos - 1]);
                     break;
                 case 'c':
-                    getCos(&exprs[exprPos], (*stack)[pos - 1]);
+                    exprs[exprPos] = getCos((*stack)[pos - 1]);
                     break;
                 case 't':
-                    getTan(&exprs[exprPos], (*stack)[pos - 1]);
+                    exprs[exprPos] = getTan((*stack)[pos - 1]);
                     break;
                 default:
                     break;
             }
-            (*stack)[pos - 1] = &exprs[exprPos];
+            (*stack)[pos - 1] = exprs[exprPos];
             exprPos++;
         } else if (c == 'h') {
             (*stack)[pos - 1]->hl = true;

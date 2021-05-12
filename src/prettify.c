@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) {
     int fg = 7;
     int bg = 0;
 
-    bool evaluateNext = true;
+    bool evaluateNext = false;
     int i;
     for (i = 1; i < argc; i++) {
 
@@ -118,9 +118,9 @@ int main(int argc, char* argv[]) {
             // Display pretty evaluated output
             if (evaluateNext) {
                 wprintf(L"\nEvaluated:\n\n");
-                Expr eval;
-                evaluate(&eval, stack[exprCount - 1]);
-                display(&eval, formating, true);
+                Expr* eval = evaluate(stack[exprCount - 1]);
+                display(eval, formating, true);
+                free(eval);
             }
             evaluateNext = false;
 
