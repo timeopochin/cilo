@@ -1,6 +1,7 @@
 #include "rpn.h"
 
 #include <ctype.h>
+#include <limits.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
@@ -55,7 +56,13 @@ int exprFromRPN(Expr*** stack, char* rpn) {
     c = rpn[i];
     do {
         if (isdigit(c)) {
+            if (value > LLONG_MAX / 10) {
+                return -1;
+            }
             value *= 10;
+            if ((value > 0) && (c - '0' > LLONG_MAX - value)) {
+                return -1;
+            }
             value += c - '0';
             valueStarted = true;
         } else if (valueStarted) {

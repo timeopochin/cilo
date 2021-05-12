@@ -186,7 +186,14 @@ Pretty pretty(Expr* expr) {
     int column;
     switch (expr->type) {
 
-        // Integer
+        case UNDEF:
+            p.text = malloc(sizeof(wchar_t)*16);
+            p.width = swprintf(p.text, 16, L"\x1b[41;37mNAN\x1b[0m");
+            p.height = 1;
+            p.align = 0;
+            p.hl = expr->hl;
+            break;
+
         case INTEGER:
             p.text = malloc(sizeof(wchar_t)*20);
             p.width = swprintf(p.text, 20, L"%ld", expr->val);

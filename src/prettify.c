@@ -36,12 +36,14 @@ int main(int argc, char* argv[]) {
     int bg = 0;
 
     bool evaluateNext = false;
+    bool calculateNext = false;
     int i;
     for (i = 1; i < argc; i++) {
 
-        // Set colours
         if (!strcmp(argv[i], "-e")) {
             evaluateNext = true;
+        } else if (!strcmp(argv[i], "-c")) {
+            calculateNext = true;
         } else if (!strcmp(argv[i], "-fg")) {
             if (i == argc - 1) {
                 usage();
@@ -105,25 +107,46 @@ int main(int argc, char* argv[]) {
             // Get the expression tree
             Expr** stack;
             int exprCount = exprFromRPN(&stack, argv[i]);
-            if (!exprCount) {
-                wprintf(L"\x1b[41;38mStack is empty!\x1b[0m\n");
+            if (exprCount == 0) {
+                wprintf(L"\x1b[41;38mStack is empty!\x1b[0m\n\n");
+                return 1;
+            } else if (exprCount == -1) {
+                wprintf(L"\x1b[41;38mOverflow error!\x1b[0m\n\n");
                 return 1;
             }
 
             // Display pretty output
-            if (evaluateNext)
+            if (evaluateNext || calculateNext) {
                 wprintf(L"Original:\n\n");
+            }
             display(stack[exprCount - 1], formating, true);
+
+            Expr* eval;
+            double calc;
+            if (evaluateNext || calculateNext) {
+                eval = evaluate(stack[exprCount - 1]);
+                if (eval->type != UNDEF) {
+                    calc = calculate(eval);
+                } else {
+                    calc = calculate(stack[exprCount - 1]);
+                }
+            }
 
             // Display pretty evaluated output
             if (evaluateNext) {
                 wprintf(L"\nEvaluated:\n\n");
-                Expr* eval = evaluate(stack[exprCount - 1]);
                 display(eval, formating, true);
                 free(eval);
             }
-            evaluateNext = false;
 
+            // Display calculated output
+            if (calculateNext) {
+                wprintf(L"\nCalculated:\n\n");
+                wprintf(L"%S%le\x1b[0m\n", formating, calc);
+            }
+
+            evaluateNext = false;
+            calculateNext = false;
             free(stack);
         }
     }

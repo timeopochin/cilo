@@ -5,9 +5,10 @@
 #include <wchar.h>
 
 // Types
-#define INTEGER  0
-#define OPERATOR 1
-#define FUNCTION 2
+#define UNDEF    -1
+#define INTEGER   0
+#define OPERATOR  1
+#define FUNCTION  2
 
 // Operators
 #define NONE 0
@@ -35,6 +36,16 @@ struct Expr {
     bool hl; // true if expression is selected
 };
 
+// a == b
+bool equals(Expr* a, Expr* b);
+
+// should a be before b
+bool before(Expr* a, Expr* b);
+
+long greatestCommonFactor(long a, long b);
+
+Expr* getUndef();
+
 Expr* getInt(long integer);
 
 Expr* getOperator(Expr* a, Expr* b, int operator);
@@ -60,6 +71,8 @@ Expr* getCos(Expr* a);
 Expr* getTan(Expr* a);
 
 Expr* evaluate(Expr* expr);
+
+double calculate(Expr* expr);
 
 #endif
 
