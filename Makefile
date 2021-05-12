@@ -1,5 +1,5 @@
 CC=cc
-LDFLAGS=
+LDFLAGS=-lm
 
 INCDIR=include
 SRCDIR=src

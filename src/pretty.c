@@ -349,7 +349,7 @@ Pretty pretty(Expr* expr) {
                         a = pretty(expr->a);
                     }
 
-                    p.width = a.width + 2;
+                    p.width = a.width + 1;
                     p.height = a.height;
                     p.align = a.align;
                     p.text = malloc(sizeof(wchar_t)*p.width*p.height);
@@ -357,14 +357,13 @@ Pretty pretty(Expr* expr) {
                     // Minus sign
                     for (row = 0; row < p.height; row++) {
                         p.text[p.width*row] = ' ';
-                        p.text[p.width*row + 1] = ' ';
                     }
                     p.text[p.width*p.align] = '-';
 
                     // a
                     for (row = 0; row < a.height; row++) {
                         for (column = 0; column < a.width; column++) {
-                            p.text[p.width*row + column + 2] = a.text[a.width*row + column];
+                            p.text[p.width*row + column + 1] = a.text[a.width*row + column];
                         }
                     }
 

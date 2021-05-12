@@ -35,11 +35,14 @@ int main(int argc, char* argv[]) {
     int fg = 7;
     int bg = 0;
 
+    bool evaluateNext = true;
     int i;
     for (i = 1; i < argc; i++) {
 
         // Set colours
-        if (!strcmp(argv[i], "-fg")) {
+        if (!strcmp(argv[i], "-e")) {
+            evaluateNext = true;
+        } else if (!strcmp(argv[i], "-fg")) {
             if (i == argc - 1) {
                 usage();
                 return 1;
@@ -108,8 +111,19 @@ int main(int argc, char* argv[]) {
             }
 
             // Display pretty output
+            if (evaluateNext)
+                wprintf(L"Original:\n\n");
             display(stack[exprCount - 1], formating, true);
-            //free(exprs);
+
+            // Display pretty evaluated output
+            if (evaluateNext) {
+                wprintf(L"\nEvaluated:\n\n");
+                Expr eval;
+                evaluate(&eval, stack[exprCount - 1]);
+                display(&eval, formating, true);
+            }
+            evaluateNext = false;
+
             free(stack);
         }
     }

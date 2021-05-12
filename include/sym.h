@@ -59,7 +59,7 @@ void getCos(Expr* expr, Expr* a);
 
 void getTan(Expr* expr, Expr* a);
 
-//Expr* evaluate(Expr* expr);
+void evaluate(Expr* eval, Expr* expr);
 
 #endif
 
