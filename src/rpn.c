@@ -26,6 +26,7 @@ int exprFromRPN(Expr*** stack, char* rpn) {
         } else if (valueStarted) {
             valueStarted = false;
             finalSize++;
+            maxSize++;
             exprCount++;
         }
         if (strchr(OPCHARS, c) != NULL) {
@@ -33,9 +34,6 @@ int exprFromRPN(Expr*** stack, char* rpn) {
             exprCount++;
         } else if (strchr(FUNCCHARS, c) != NULL) {
             exprCount++;
-        }
-        if (finalSize > maxSize) {
-            maxSize = finalSize;
         }
         i++;
         c = rpn[i];
