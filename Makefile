@@ -19,7 +19,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 
 $(PRETTIFY): $(OBJ) $(OBJDIR)/prettify.o
 	@mkdir -p $(@D)
-	$(CC) $(LDFLAGS) -o $@ $^
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 .PHONY: all clean
 
